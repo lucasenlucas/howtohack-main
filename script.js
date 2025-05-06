@@ -10,4 +10,24 @@ function type() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', type);
+document.addEventListener('DOMContentLoaded', () => {
+  type();
+  setupScrollAnimations();
+});
+
+function setupScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  const elementsToAnimate = document.querySelectorAll('.feature-card, .blog-placeholder');
+  elementsToAnimate.forEach(el => {
+    observer.observe(el);
+  });
+}
